@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    var orderno          = $$('#orderno'),
+        contractdatefrom = $$('#contractdatefrom'),
+        contractdateto   = $$('#contractdateto'),
+        pod              = $$('#pod'),
+        lfno             = $$('#lfno');
+        loading          = $$('#loading');
+        ship             = $$('#ship');
+        arrived          = $$('#arrived');
+        send             = $$('#send');
+    $$('#btn').click(function(){
+      $$.ajax({
+        url: '/search',
+        type: 'POST',
+        data: 'orderno='+orderno.val()+'&contractdatefrom='+contractdatefrom.val()+'&contractdateto='+contractdateto.val()+'&pod='+pod.val()+'&lfno='+lfno.val()+'&loading='+loading.attr("checked")+'&ship='+ship.attr("checked")+'&arrived='+arrived.attr("checked")+'&send='+send.attr("checked"),
+        dataType: 'json',
+        beforeSend: function(){
+          $$('#table').html('¼ìË÷ÖĞ...... </br>ÇëÉÔºó');
+        },
+        success: function (j) {
+          $$('#table').html(j)
+        },
+        error: function () {
+          alert("¼ìË÷³ö´í£¬ÇëÉÔºóÔÙÊÔ£¡");
+        }
+      });
+    })  
+</script>
+</body>
+</html>

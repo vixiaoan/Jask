@@ -1,0 +1,77 @@
+$def with (corp)
+
+<form action="" method="POST">
+	往来单位：<input type="text" value=$corp.SNAME name="sname"></br>
+	&nbsp;&nbsp;CORPID：<input type="text" value=$corp.CORPID name="corpid"></br>
+	用&nbsp;户&nbsp;名：<input type="text" value=$corp.CORPNO name="username" ></br>
+	密&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="text" value=$corp.WEB_PASSWORD name="password"></br>
+	
+	<input type="checkbox" name="contractdate"
+	$if corp.PERMISSION[0] == '1':
+		checked="checked"
+	/> 合同日期
+	<input type="checkbox" name="loadingtime"
+	$if corp.PERMISSION[1] == '1':
+		checked="checked" 
+	/> 装货日期
+	<input type="checkbox" name="etd"
+	$if corp.PERMISSION[2] == '1':
+		checked="checked" 
+	/> 离港日期
+	<input type="checkbox" name="arrivetime"
+	$if corp.PERMISSION[3] == '1':
+		checked="checked" 
+	/> 到港日期
+	<input type="checkbox" name="podarrivedtime"
+	$if corp.PERMISSION[4] == '1':
+		checked="checked" 
+	/> 卸货日期
+	<input type="checkbox" name="con"
+	$if corp.PERMISSION[5] == '1':
+		checked="checked" 
+	/>收货人 
+	<input type="checkbox" name="loadingweight"
+	$if corp.PERMISSION[6] == '1':
+		checked="checked" 
+	/>货重
+	</br>
+	<input type="checkbox" name="orderno"
+	$if corp.PERMISSION[7] == '1':
+		checked="checked" 
+	/>合同编号
+	<input type="checkbox" name="lotno"
+	$if corp.PERMISSION[8] == '1':
+		checked="checked" 
+	/>序号
+
+	<input type="checkbox" name="lfno"
+	$if corp.PERMISSION[9] == '1':
+		checked="checked" 
+	/>验票单号
+	<input type="checkbox" name="pod"
+	$if corp.PERMISSION[10] == '1':
+		checked="checked" 
+	/>目的港
+	<input type="checkbox" name="cntrno"
+	$if corp.PERMISSION[11] == '1':
+		checked="checked" 
+	/>箱号
+	<input type="checkbox" name="cntrseal"
+	$if corp.PERMISSION[12] == '1':
+		checked="checked" 
+	/>封号
+	<input type="checkbox" name="vsl"
+	$if corp.PERMISSION[13] == '1':
+		checked="checked" 
+	/>船名
+	<input type="checkbox" name="voy"
+	$if corp.PERMISSION[14] == '1':
+		checked="checked" 
+	/>航次
+	<input type="checkbox" name="goodsname"
+	$if corp.PERMISSION[15] == '1':
+		checked="checked" 
+	/>品名
+	</br>
+	<input type="submit" value="提交">
+</form>

@@ -1,0 +1,227 @@
+$def with (cntrs,pods,goodsnames)
+<!DOCTYPE html>
+<html>
+<head>
+<title>JASK 物流信息跟踪系统</title>
+<meta charset="GBK">
+<link rel="stylesheet" href="static/css/base.css"/>
+<link rel="stylesheet" href="static/css/reset-layout.css"/>
+
+<script src="static/js/jquery.js" type="text/javascript"></script>
+<script src="static/js/calendar.js"></script> 
+
+<script type="text/javascript">
+$$(document).ready(function(e) { 
+		$$(".menu-user").hover(function(){
+			$$(this).find(".menu-user-list").stop(true, true).animate({ opacity: 'show', height: 'show' }, 300);
+		},function(){
+			$$(this).find(".menu-user-list").stop(true, true).hide();
+		});
+    $$('td.status').each(function(){
+      var str = $$(this).text();
+      if (str != ''){
+        if (str.indexOf('预') == -1)  {
+        	$$(this).css({'background-color':'#8cc174'});
+        }
+      }
+    })
+});	
+</script>
+</head>
+<body>
+ 
+        <div id="navigation" >
+            <div class="nav-content">
+                <h4 class="fl" onclick="window.location.href='Index.html'" style="cursor:pointer;">JASK 物流信息跟踪系统</h4>
+                <div class="fr">
+                    <div class="menu-user">
+                        <h2><i class="icon icon-user"></i>$session.usercname</h2>
+                        <ul class="menu-user-list" style="display: none;">
+                            <!--li><a target="mainFrame" href="#">密码修改</a></li-->
+                            <li><a href="/logout">安全退出</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+
+
+	<div id="content">
+		<div class="container-fluid">
+    		<div class="box">
+				<div class="box-title">
+					<h3><i class="icon icon-table"></i>数据列表</h3>                    
+				</div>
+				<div class="box-content">
+
+                  	<div class="row-fluid clearfix">
+   <!--检索框-->
+  <form action="" method="POST" id="search">
+    合同编号：
+    <input type="text" name="orderno"  style="width:150px; height:20px" id="orderno"> 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    验票单号：
+    <input type="text" name="lfno" id="lfno"  style="width:150px; height:20px">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    合同日期：
+    <input name="contractdatefrom" id="contractdatefrom" type="text" onfocus="new Calendar().show(this);"  style="width:150px; height:20px">---
+    <input name="contractdateto" id="contractdateto" type="text" onfocus="new Calendar().show(this);"  style="width:150px; height:20px">
+    </p></br>
+    目&nbsp;的&nbsp;&nbsp;港：
+    <select name="pod" id="pod" style="width:150px; height:20px">
+      <option value="">所有</option>
+      $for pod in pods:
+        <option value="$pod.PODID">$pod.POD</option>
+    </select>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：
+    <select id="goodsname" name="goodsname" style="width:150px; height:20px"">
+      <option value="">所有</option>
+      $for goodsname in goodsnames:
+        <option value="$goodsname.GOODSID">$goodsname.GOODSNAME</option>
+     </select>  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：
+    <select id="transstatus" name="transstatus" style="width:150px; height:20px"">
+      <option value="0">所有</option>
+      <option value="1">装货</option>
+      <option value="2">离港</option>
+      <option value="3">到港</option>
+      <option value="4">送货</option>
+     </select>  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input id="send" type="checkbox" /> 包含已完成业务
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" id="btn">检索</button>
+    <b id="cntrcount">符合条件的集装箱量为：$cntrcount</b>
+  </form>
+  <!--检索框结束-->
+                        </div>     
+                        <div id="table" class="row-fluid clearfix">
+                            <table class="table table-hover table-bordered ">
+                                <thead>
+                                    <tr>
+                                        
+                                        $if session.permission[0] == '1':
+                                          <th width="5%">合同时间</th>
+                                        $if session.permission[1] == '1':
+                                          <th width="5%">装货日期</th>
+                                        $if session.permission[2] == '1':
+                                          <th width="5%">离港日期</th>     
+                                        $if session.permission[3] == '1':
+                                          <th width="5%">到港日期</th>
+                                        $if session.permission[4] == '1':
+                                          <th width="5%">卸货日期</th>
+                                        $if session.permission[5] == '1':
+                                          <th width="5%">收货人</th>
+                                        $if session.permission[6] == '1':
+                                          <th width="5%">货重</th>
+                                        $if session.permission[7] == '1':
+                                          <th width="6%">合同编号</th>
+                                        $if session.permission[8] == '1':
+                                          <th width="3%">序号</th>
+                                        $if session.permission[9] == '1':
+                                          <th width="4%">验票单号</th>
+                                        $if session.permission[10] == '1':
+                                          <th width="3%">目的港</th>
+                                        $if session.permission[11] == '1':
+                                          <th width="5%">箱号</th>
+                                        $if session.permission[12] == '1':
+                                          <th width="5%">封号</th>
+                                        $if session.permission[13] == '1':
+                                          <th width="5%">船名</th>
+                                        $if session.permission[14] == '1':
+                                          <th width="5%">航次</th>
+                                        $if session.permission[15] == '1':
+                                          <th width="4%">品名</th>
+                                    </tr>                                
+                                </thead>
+                                <tbody>
+                                $for cntr in cntrs:
+                                  <tr>
+                                  $if session.permission[0] == '1':
+                                    <td class="status">$cntr.CONTRACTDATE</td>
+                                  $if session.permission[1] == '1':
+                                    <td class="status">$cntr.LOADINGTIME</td>
+                                  $if session.permission[2] == '1':
+                                    <td class="status">$cntr.ETD</td>
+                                  $if session.permission[3] == '1':
+                                    <td class="status">$cntr.ARRIVETIME</td> 
+                                  $if session.permission[4] == '1':
+                                    <td class="status">$cntr.PODARRIVEDTIME</td> 
+                                  $if session.permission[5] == '1':
+                                    <td>$cntr.CON</td> 
+                                  $if session.permission[6] == '1':
+                                    <td>$cntr.LOADINGWEIGHT</td>
+                                  $if session.permission[7] == '1':
+                                    <td>$cntr.ORDERNO</td>
+                                  $if session.permission[8] == '1':
+                                    <td>$cntr.LOTNO</td>
+                                  $if session.permission[9] == '1':
+                                    <td>$cntr.LFNO</td>
+                                  $if session.permission[10] == '1':
+                                    <td>$cntr.POD</td>
+                                  $if session.permission[11] == '1':
+                                    <td>$cntr.CNTRNO</td>
+                                  $if session.permission[12] == '1':
+                                    <td>$cntr.CNTRSEAL</td>
+                                  $if session.permission[13] == '1':
+                                    <td>$cntr.VSL</td>
+                                  $if session.permission[14] == '1':
+                                    <td>$cntr.VOY</td>
+                                  $if session.permission[15] == '1':
+                                    <td>$cntr.GOODSNAME</td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!--div class="row-fluid clearfix">
+                            <h3 class="totalNum">共 424 条</h3>
+                            <div class="pageNum">
+                                <a class="selected" href="?page=1 ">1</a><a href="?page=2 ">2</a>
+                            </div>                            
+                        </div-->
+				</div>
+			</div>	
+		</div>
+	</div>
+
+<script type="text/javascript">
+    var orderno          = $$('#orderno'),
+        contractdatefrom = $$('#contractdatefrom'),
+        contractdateto   = $$('#contractdateto'),
+        pod              = $$('#pod'),
+        lfno             = $$('#lfno');
+        loading          = $$('#loading');
+        ship             = $$('#ship');
+        arrived          = $$('#arrived');
+        send             = $$('#send');
+        goodsname        = $$('#goodsname');
+        transstatus      = $$('#transstatus');	
+    $$('#btn').click(function(){
+      $$.ajax({
+        url: '/search',
+        type: 'POST',
+        contentType:"application/x-www-form-urlencoded; charset=GBK",
+        data:'transstatus='+transstatus.val()+'&goodsname='+goodsname.val()+'&orderno='+orderno.val()+'&contractdatefrom='+contractdatefrom.val()+'&contractdateto='+contractdateto.val()+'&pod='+pod.val()+'&lfno='+lfno.val()+'&loading='+loading.attr("checked")+'&ship='+ship.attr("checked")+'&arrived='+arrived.attr("checked")+'&send='+send.attr("checked"),
+        dataType: 'json',
+        beforeSend: function(){
+          $$('#table').html('检索中...... </br>请稍后');
+        },
+        success: function (j) {
+          $$('#table').html(j[0]);
+          $$('#cntrcount').html('符合条件的集装箱量为：'+j[1]);
+        },
+        error: function () {
+          $$('#table').html("检索出错，请稍后再试！");
+        }
+      });
+
+    })  
+</script>
+
+ 
+  </body>
+</html>

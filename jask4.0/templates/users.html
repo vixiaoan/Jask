@@ -1,0 +1,30 @@
+$def with (users)
+
+<head>
+<link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+</head>
+
+<form action="" method="POST">
+	单位名称：<input type="text" name="sname">
+	<input type="submit" value="检索">
+</form>
+
+<table>
+	<th>单位名称</th>
+	<th>COPRID</th>	
+	<th>用户名</th>
+	<th>密码</th>
+	<th>编辑</th>
+$for u in users:
+	<tr>
+	<td>$u.SNAME</td>	
+	<td>$u.CORPID</td>
+	<td>$u.CORPNO</td>
+	<td>$u.WEB_PASSWORD</td>
+	$if u.WEB_PASSWORD:
+		<td><a href="/admin/$u.CORPID/edit">编辑</a></td>	
+	$else:
+		<td><a href="/admin/$u.CORPID/add">增加</a></td>	
+	</tr>
+</table>
+	

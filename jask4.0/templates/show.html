@@ -1,0 +1,97 @@
+$def with (cntrs,pods)
+$:render.header()
+<body>
+  <!--顶部导航-->
+  <a href="/logout">注销 $session.username</a>
+  <!--顶部导航结束-->
+
+   <!--检索框-->
+  <form action="" method="POST" id="search">
+    合同编号：
+    <input type="text" name="orderno" id="orderno"> 
+    验票单号：
+    <input type="text" name="lfno" id="lfno">
+    合同日期：
+    <input name="contractdatefrom" id="contractdatefrom" type="text" onfocus="new Calendar().show(this);">---
+    <input name="contractdateto" id="contractdateto" type="text" onfocus="new Calendar().show(this);">
+    </br>
+    目&nbsp;的&nbsp;港：
+    <select name="pod" id="pod">
+    	<option value="">所有</option>
+    	$for pod in pods:
+      	<option value="$pod.PODID">$pod.POD</option>
+    </select>
+    <input type="checkbox" name="loading" id="loading">装货
+    <input type="checkbox" name="ship" id="ship">上船
+    <input type="checkbox" name="arrived" id="arrived">到港
+    <input type="checkbox" name="send" id="send">送货
+    <button type="button" id="btn">检索</button>
+  </form>
+  <!--检索框结束-->
+  <hr />
+  <!--表格-->
+  <div id="table">
+  <table>
+    <thead>
+      <tr>
+        <th style="width:50px">装货</th>
+        <th style="width:50px">上船</th>
+        <th style="width:50px">到港</th>
+        <th style="width:50px">送货</th>
+        <th style="width:90px">合同时间</th>
+        <th style="width:90px">装货日期</th>
+        <th style="width:90px">到港日期</th>
+        <th style="width:90px">卸货日期</th>
+        <th style="width:90px">分拨时间</th>
+        <th style="width:90px">收货人</th>
+        <th style="width:50px">货重</th>
+        <th style="width:120px">合同编号</th>
+        <th style="width:50px">序号</th>
+        <th style="width:90px">验票单号</th>
+        <th style="width:90px">目的港</th>
+        <th style="width:90px">箱号</th>
+        <th style="width:90px">封号</th>
+        <th style="width:90px">船名</th>
+        <th style="width:90px">航次</th>
+        <th style="width:120px">MBLNO</th>
+        <th style="width:90px">品名</th>
+        <th style="width:90px">ETD</th>
+        <th style="width:90px">堆存天数</th>
+        <th style="width:90px">运输周期</th>
+      </tr>
+    </thead>
+    <tbody>
+    $for cntr in cntrs:
+      <tr>
+      <td>$cntr.LOADINGSTATUS</td> 
+      <td>$cntr.SHIPPINGSTATUS</td> 
+      <td>$cntr.ARRIVESTATUS</td> 
+      <td>$cntr.PODLANDSTATUS</td> 
+      <td>$cntr.CONTRACTDATE</td>
+      <td>$cntr.LOADINGTIME</td>
+      <td>$cntr.ARRIVETIME</td> 
+      <td>$cntr.PODARRIVEDTIME</td> 
+      <td>$cntr.ETA</td>
+      <td>$cntr.CON</td> 
+      <td>$cntr.LOADINGWEIGHT</td>
+      <td>$cntr.ORDERNO</td>
+      <td>$cntr.LOTNO</td>
+      <td>$cntr.LFNO</td>
+      <td>$cntr.POD</td>
+      <td>$cntr.CNTRNO</td>
+      <td>$cntr.CNTRSEAL</td>
+      <td>$cntr.VSL</td>
+      <td>$cntr.VOY</td>
+      <td>$cntr.MBLNO</td>
+      <td>$cntr.GOODSNAME</td>
+      <td>$cntr.ETD</td>
+      <td>$cntr.DC</td>
+      <td>$cntr.CYCLE</td>     
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+$:render.foot()
+
+

@@ -1,0 +1,52 @@
+$def with (erro)
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<title>JASK 物流信息跟踪系统</title>		
+		<link href="static/css/login.css" type="text/css" media="screen" rel="stylesheet">
+		</style>
+	<style type="text/css"></style>
+	</head>
+	<body id="login">
+		<div id="wrappertop"></div>
+			<div id="wrapper">
+					<div id="content">
+						<div id="header">
+							<h1><a href=""><img src="static/imgs/logo.png" alt="JASK"></a></h1>
+						</div>
+						<div id="darkbanner" class="banner320">
+							<h2>JASK 物流信息跟踪系统</h2>
+						</div>
+						<div id="darkbannerwrap">
+						</div>
+						<form name="form1" id="sigin" method="post" action="">
+						<fieldset class="form">
+              <p>
+								<label for="username">用户名:</label>
+								<span id="validateUsername"></span>
+								<input name="username" id="username" type="text" value="">
+							</p>
+							<p>
+								<label for="password">密&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
+								<span id="validatePassword"></span>
+								<input name="password" id="userpassword" type="password">
+							</p>
+							<button type="submit" class="positive" name="Submit">登录</button>
+					</form></div>
+				</div>   
+
+<script src="static/js/jquery.js"></script>
+<script type="text/javascript">
+  $$('#sigin').submit(function(e){
+    if ($$('#username').val() == '' || $$('#username').val() == null) {
+      $$('#validateUsername').html('用户名不能为空！');
+      e.preventDefault();
+    } else($$('#validateUsername').html(''))  
+    if ($$('#userpassword').val() == '' || $$('#userpassword').val() == null) {
+      $$('#validatePassword').html('密码不能为空！');
+      e.preventDefault();
+    } else{$$('#validatePassword').html('')}
+  })
+</script>
+
+
+</body></html>
